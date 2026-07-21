@@ -1,0 +1,34 @@
+DECLARE
+
+    CURSOR customer_cursor IS
+        SELECT customer_id, balance
+        FROM customer;
+
+BEGIN
+
+    FOR cust IN customer_cursor
+    LOOP
+
+        IF cust.balance > 10000 THEN
+
+            UPDATE customer
+            SET IsVIP = 'TRUE'
+            WHERE customer_id = cust.customer_id;
+
+            DBMS_OUTPUT.PUT_LINE(
+                'Customer ID ' || cust.customer_id ||
+                ' promoted to VIP'
+            );
+
+        END IF;
+
+    END LOOP;
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE(
+        'VIP status updated successfully.'
+    );
+
+END;
+/
